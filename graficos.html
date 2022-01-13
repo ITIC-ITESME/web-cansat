@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/bootstrap-grid.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="estilograficos.css">
+    <title>Document</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">Proyecto CANSAT</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Inicio </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="graficos.html">Graficos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="consultas2.html">Resumen de datos</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+      <section class="inicio" id="inicio">
+        <div class="content">   
+            <h3>Proyecto <span>CanSat</span></h3>
+        
+        <p>Seccion donde podras ver los graficos en tiempo real del dispositivo CanSat.</p>
+    </div>
+            <div class="image">
+                <img src="img/Cansat_key_visual_pillars.png" alt="" >
+            </div>
+    </section>
+<br>
+
+    <section> 
+        <div class="container">    
+            <div class="row">
+                <div class="col-lg-6 col-md-5">
+                    <div class="card"><br>
+                        <h3><br></h3>  
+                        <p class="value-hora"><br><br></p>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-5">
+                    <div class="card"><br>
+                        <h3><br></h3>  
+                        <p class="value-fecha"><br><br></p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="card">
+                        <h3>TEMPERATURA</h3>
+                        <div class="card-content">
+                            <div class="gauge-temperature GaugeMeter gaugeMeter"  data-theme="green" data-width="16"  data-style="Arch" data-animationstep="0"></div>
+                        </div>
+                        <p class="value-temperature">0 C°</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="card">
+                        <h3>HUMEDAD</h3>
+                        <div class="card-content">
+                            <div class="gauge-humidity gaugeMeter" data-theme="blue" data-width="16"  data-style="Arch" data-animationstep="0"></div>
+                        </div>  
+                        <p class="value-humidity">0 %</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="card">
+                        <h3>Gas</h3>
+                        <div class="card-content">
+                            <div class="gauge-gas GaugeMeter gaugeMeter"  data-theme="green" data-width="16"  data-style="Arch" data-animationstep="0"></div>
+                        </div>
+                        <p class="value-gas">0 G</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <iframe  src="http://localhost/DisenoFinal/nuevografbarras.php" width="1190" height="350" ></iframe>
+                </div>
+            </div>
+        </div> 
+   
+        </body>
+        
+        <script type='text/javascript' src="js/jquery-3.5.1.min.js"></script>
+        <script type='text/javascript' src="js/gauge-meter.js"></script>
+        <script>
+        $(document).ready(function () {
+        
+           setInterval(charts, 3000);
+        
+        });
+        
+        function charts(){
+        
+            $.ajax({
+                url:"http://localhost/DisenoFinal/backend/getData.php",
+                type:"POST",
+                dataType:"json",
+                success:function(data){
+                    
+                    $(".gauge-temperature").gaugeMeter({ percent: data.temperatura*100/50});
+                    $(".value-temperature").html(data.temperatura+" C°");    
+        
+                    $(".gauge-humidity").gaugeMeter({ percent: data.humedad});
+                    $(".value-humidity").html(data.humedad+" %");
+        
+                    $(".gauge-gas").gaugeMeter({ percent: data.gas*100/50});
+                    $(".value-gas").html(data.gas+" G");  
+
+                    $(".value-hora").html(data.fecha2+"");
+                    $(".value-fecha").html(data.hora+"");
+
+        
+                }
+            });
+        
+        }
+        
+        </script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+    </section>
+</body>
+</html>

@@ -1,0 +1,42 @@
+.inicio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(img/abstract-vector-white-background-vector-id1194009101.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.inicio .image img{
+    width: 40vw;
+    animation: float 3s linear infinite;
+}
+
+@keyframes float{
+    0%, 100%{
+        transform: translateY(0rem);
+    }
+    50%{
+transform: translateY(-2rem);
+    }
+}
+
+.inicio .content h3{
+    font-size: 5.5rem;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.inicio .content h3 span{
+color: var(--azul);
+text-transform: uppercase;
+}
+
+.inicio .content p{
+    font-size: 1.7rem;
+    color: #666;
+    padding: 1rem 0;
+}
+
+
